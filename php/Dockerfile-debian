@@ -78,7 +78,7 @@ RUN cd /tmp && \
     rm -rf /tmp/xdebug
 
 # Environment settings
-ENV PHP_USER_ID=1000 \
+ENV PHP_USER_ID=33 \
     PHP_ENABLE_XDEBUG=0 \
     PATH=/app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
     TERM=linux \

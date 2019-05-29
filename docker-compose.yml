@@ -14,18 +14,25 @@ services:
       - PHP_ENABLE_XDEBUG
       - TEST_RUNTIME_PATH=/tmp/runtime
     volumes:
-      - ./tests:/tests:delegated
+      #- ./tests:/tests:delegated
       # Framework testing
-      - ./_host-volumes/yii2:/yii2:delegated
+      #- ./_host-volumes/yii2:/yii2:delegated
       # Application testing
       - ./_host-volumes/app:/app:delegated
       # Composer cache
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    restart: always
   db:
     build:
       dockerfile: Dockerfile
       context: 'db'
-    image: mysql
+    image: ${MYSQL_IMAGE_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/config.cnf:/etc/mysql/conf.d/config.conf
     container_name: db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
+
+volumes:
+    db_data: {}

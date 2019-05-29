@@ -1,18 +1,7 @@
 <p align="center">
-    <a href="https://www.docker.com/" target="_blank">
-        <img src="https://www.docker.com/sites/default/files/mono_vertical_large.png" height="100px">
-    </a>
     <h1 align="center">Yii2 PHP Docker Image</h1>
     <br>
 </p>
-
-**Stable**
-[![Build Status](https://travis-ci.org/yiisoft/yii2-docker.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-docker)
-**Development**
-[![pipeline status](https://gitlab.com/yiisoft/yii2-docker/badges/master/pipeline.svg)](https://gitlab.com/yiisoft/yii2-docker/commits/master)
-
-
-This is the repo of the official [Yii 2.0 Framework](http://www.yiiframework.com/) image on [DockerHub](https://hub.docker.com/r/yiisoftware/yii2-php/) for PHP.
 
 ## About
 
