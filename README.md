@@ -14,10 +14,19 @@ Sistema Web de Gestión para el proceso administrativo de asignación de aulas a
 
     cp .env-dist .env
 
-Adjust the versions in `.env` if you want to build a specific version.
+Editar `.env` con la configuración necesaria.
 
-> **Note:** Please make sure to use a matching combination of `DOCKERFILE_FLAVOUR` and `PHP_BASE_IMAGE_VERSION`
+> **Nota:** Elegir la versión para la combinación de  `DOCKERFILE_FLAVOUR` y `PHP_BASE_IMAGE_VERSION`
 
+> **Setup para Mysql:** Definir el nombre de la base de datos `DB_DATABASE`, la contraseña del usuario root `DB_ROOT_PASSWORD`, el usuario de la base de datos de la aplicación `DB_USER`, la contraseña de el usuario `DB_PASSWORD` y los parámetros de conexión `DB_MYSQL_DSN`.
+
+Ejemplo:
+
+    DB_DATABASE=aulas_db
+    DB_ROOT_PASSWORD=root
+    DB_USER=aulas_user
+    DB_PASSWORD=aulas_pass
+    DB_MYSQL_DSN=mysql:host=db;dbname=
 
 ## Configuration
 
@@ -26,6 +35,8 @@ Adjust the versions in `.env` if you want to build a specific version.
 
 
 ## Building
+
+Construir las imágenes
 
     docker-compose build
 
@@ -51,12 +62,12 @@ Una vez dentro del contenedor ejecutar las siguientes comandos:
 
 > **Nota:** Borra el contenido de la carpeta `/app`.
 
-Instalar la aplicacion desde el repositorio oficial:
+Instalar la aplicación desde el repositorio oficial:
 
     wget https://github.com/FedeMDO/aulas/archive/master.zip
     unzip master.zip
     mv aulas-master/app/{.[!.],}* /app/
-    rm -r -f aulas-master* "
+    rm -r -f aulas-master*
 
 Instalar las dependencias con composer:
 

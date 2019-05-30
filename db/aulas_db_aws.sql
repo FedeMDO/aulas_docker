@@ -742,13 +742,13 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `profile_picture`, `
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Volcando estructura para vista aulas_db.oferta_academica
-DROP VIEW IF EXISTS `oferta_academica`;
+--DROP VIEW IF EXISTS `oferta_academica`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `oferta_academica`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `oferta_academica` AS select `evento_calendar`.`id` AS `id`,`carrera`.`NOMBRE` AS `Carrera`,`materia`.`anio` AS `Anio`,`materia`.`NOMBRE` AS `Materia`,`comision`.`NUMERO` AS `Comision`,`evento_calendar`.`dow` AS `Dia`,concat(left(`evento_calendar`.`Hora_ini`,5),'hs') AS `HoraInicio`,concat(left(`evento_calendar`.`Hora_fin`,5),'hs') AS `HoraFin`,`edificio`.`NOMBRE` AS `Edificio`,`sede`.`NOMBRE` AS `Sede`,`aula`.`NOMBRE` AS `Aula`,`evento_calendar`.`ID_Ciclo` AS `Ciclo` from ((((((`carrera` join `materia` on((`materia`.`ID_Carrera` = `carrera`.`ID`))) join `comision` on((`materia`.`ID` = `comision`.`ID_MATERIA`))) join `evento_calendar` on((`comision`.`ID` = `evento_calendar`.`ID_Comision`))) join `sede` on((`sede`.`ID_INSTITUCION` = 1))) join `edificio` on((`edificio`.`ID_SEDE` = `sede`.`ID`))) join `aula` on((`aula`.`ID_EDIFICIO` = `edificio`.`ID`))) where (`aula`.`ID` = `evento_calendar`.`ID_Aula`) order by `carrera`.`NOMBRE` desc,`materia`.`anio`,`evento_calendar`.`dow`;
 
 -- Volcando estructura para vista aulas_db.oferta_academica_finales
-DROP VIEW IF EXISTS `oferta_academica_finales`;
+--DROP VIEW IF EXISTS `oferta_academica_finales`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `oferta_academica_finales`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `oferta_academica_finales` AS select `ec`.`id` AS `ID`,`carrera`.`NOMBRE` AS `Carrera`,`ec`.`nombre` AS `Final`,`ec`.`descripcion` AS `Descripcion`,left(`ec`.`inicio`,10) AS `Fecha`,concat(substr(`ec`.`inicio`,12,5),'hs') AS `Inicio`,concat(substr(`ec`.`fin`,12,5),'hs') AS `Fin`,`aula`.`NOMBRE` AS `Aula`,`edificio`.`NOMBRE` AS `Edificio`,`sede`.`NOMBRE` AS `Sede` from ((((`especial_calendar` `ec` join `aula` on((`ec`.`ID_Aula` = `aula`.`ID`))) join `carrera` on((`ec`.`ID_Carrera` = `carrera`.`ID`))) join `edificio` on((`aula`.`ID` = `edificio`.`ID`))) join `sede` on((`edificio`.`ID` = `sede`.`ID`))) where (`ec`.`EXAMEN_FINAL` = 1) order by `carrera`.`NOMBRE`,`ec`.`inicio`,`ec`.`nombre`;
