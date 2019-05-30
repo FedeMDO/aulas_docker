@@ -31,6 +31,7 @@ RUN apt-get update && \
             openssh-client \
             nano \
             unzip \
+            wget \
             libcurl4-openssl-dev \
             libssl-dev \
         --no-install-recommends && \

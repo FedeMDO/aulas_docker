@@ -1,19 +1,14 @@
 <p align="center">
-    <h1 align="center">Yii2 PHP Docker Image</h1>
+    <h1 align="center">Aulas Docker Image</h1>
     <br>
 </p>
 
 ## About
 
-These Docker images are built on top of the official PHP Docker image, they contain additional PHP extensions required to run Yii 2.0 framework, but no code of the framework itself.
-The `Dockerfile`(s) of this repository are designed to build from different PHP-versions by using *build arguments*.
+Proyecto de Docker para instalar el Sistema de Gestión de Aulas
 
-### Available versions for `yiisoftware/yii2-php`
+Sistema Web de Gestión para el proceso administrativo de asignación de aulas a cursos, comisiones, exámenes finales y eventos especiales en el ámbito de Universidades, Facultades e Institutos, donde la distribución del espacio conlleve una tarea crucial. Proyecto iniciado por estudiantes avanzados de la Universidad Nacional Arturo Jauretche, Buenos Aires, Argentina.
 
-```
-7.3-apache, 7.2-apache, 7.1-apache, 7.0-apache, 5.6-apache
-7.3-fpm, 7.2-fpm, 7.1-fpm, 7.0-fpm, 5.6-fpm
-```
 
 ## Setup
 
@@ -35,27 +30,57 @@ Adjust the versions in `.env` if you want to build a specific version.
     docker-compose build
 
 
-## Testing
+## Iniciar contenedores
 
-    docker-compose run --rm php php /tests/requirements.php
-
-### Xdebug
-
-To enable Xdebug, set `PHP_ENABLE_XDEBUG=1` in .env file
-
-Xdebug is configured to call ip `xdebug.remote_host` on `9005` port (not use standard port to avoid conflicts),
-so you have to configure your IDE to receive connections from that ip.
-
-If you are using macOS, you can fill `xdebug.remote_host` with `host.docker.internal`, due to a network limitation on mac (https://docs.docker.com/docker-for-mac/networking/#port-mapping)
-
-    ### (macOS) configuration
-    xdebug.remote_host=host.docker.internal
-
-## Documentation
-
-More information can be found in the [docs](/docs) folder.
+    docker-compose up -d
 
 
-## FAQ
+## Instalar la aplicación
 
-- Error code `139` on Alpine for PHP `5.6-7.1` results from a broken ImageMagick installation         
+### Contenedor de aplicación
+
+Ingresar al contenedor de la aplicación
+
+    docker exec -it app bash
+
+> **Nota:** Asegurarse que el nombre del contenedor de la aplicación es `app`
+
+Una vez dentro del contenedor ejecutar las siguientes comandos:
+
+    rm -r -f /app/{.[!.],}*
+
+> **Nota:** Borra el contenido de la carpeta `/app`.
+
+Instalar la aplicacion desde el repositorio oficial:
+
+    wget https://github.com/FedeMDO/aulas/archive/master.zip
+    unzip master.zip
+    mv aulas-master/app/{.[!.],}* /app/
+    rm -r -f aulas-master* "
+
+Instalar las dependencias con composer:
+
+    composer install
+
+El propietario de la carpeta debe ser el usuario de Apache (`www-data`)
+
+    chown -R www-data:www-data .
+
+Crear el `.env` desde `.env.example` y salir
+
+    cp .env.example .env
+    exit
+
+### Contenedor de base de datos
+
+Ingresar al contenedor de base de datos:
+
+    docker exec -it db bash
+
+> **Nota:** Asegurarse que el nombre del contenedor de base de datos es `db`
+
+Instalar la base de datos:
+
+    mysql -p < aulas_db_aws.sql
+
+> **Nota:** La contraseña del usuario `root` esta definida en el archivo de variables de entorno del contenedor `.env`

@@ -13,7 +13,7 @@
 
 
 -- Volcando estructura de base de datos para aulas_db
-DROP DATABASE IF EXISTS `aulas_db`;
+-- DROP DATABASE IF EXISTS `aulas_db`;
 CREATE DATABASE IF NOT EXISTS `aulas_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `aulas_db`;
 
